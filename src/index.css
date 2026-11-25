@@ -1,0 +1,218 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #090B10;
+  --bg-secondary: #11151D;
+  --bg-card: #171D28;
+  --bg-card-elevated: #1D2433;
+  --accent-orange: #FF642D;
+  --accent-lime: #C5F36B;
+  --text-primary: #F5F6FA;
+  --text-secondary: #9299A8;
+  --border-subtle: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --font-display: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+@layer base {
+  html {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-orange);
+    outline-offset: 2px;
+  }
+}
+
+/* Surface & border primitives */
+.surface-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+}
+
+.surface-secondary {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+}
+
+/* Native <dialog> modal best practices */
+dialog.fitdesk-dialog {
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: 1rem;
+  max-width: min(94vw, 640px);
+  width: 100%;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
+}
+
+dialog.fitdesk-dialog.fitdesk-dialog-lg {
+  max-width: min(94vw, 820px);
+}
+
+dialog.fitdesk-dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog.fitdesk-dialog::backdrop {
+  background: rgba(5, 7, 11, 0.78);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  dialog.fitdesk-dialog[open] {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition:
+      opacity 0.22s ease-out,
+      transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+      display 0.22s allow-discrete,
+      overlay 0.22s allow-discrete;
+  }
+
+  @starting-style {
+    dialog.fitdesk-dialog[open] {
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+    }
+  }
+}
+
+/* Responsive Semantic Table with @container */
+.fitdesk-table-wrapper {
+  overflow: auto;
+  max-inline-size: 100%;
+  container-type: inline-size;
+}
+
+.fitdesk-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.fitdesk-table thead {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 2;
+  background-color: var(--bg-secondary);
+}
+
+.fitdesk-table th {
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.fitdesk-table td {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+
+.fitdesk-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+@container (width < 640px) {
+  .fitdesk-table-responsive thead {
+    display: none;
+  }
+
+  .fitdesk-table-responsive,
+  .fitdesk-table-responsive tbody,
+  .fitdesk-table-responsive tr,
+  .fitdesk-table-responsive td {
+    display: block;
+    width: 100%;
+  }
+
+  .fitdesk-table-responsive tr {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .fitdesk-table-responsive td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.4rem 0;
+    border-bottom: none;
+    text-align: right;
+  }
+
+  .fitdesk-table-responsive td::before {
+    content: attr(data-label);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-align: left;
+  }
+}
+
+/* Subtle custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+/* 3D Membership Card perspective helper */
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
